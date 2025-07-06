@@ -165,17 +165,51 @@
 
 <section id="contact" class="section">
   <h2>📩 Contact Me</h2>
-  <form class="contact-form" action="https://formspree.io/f/mrbkvyar" method="POST">
+  <form class="contact-form" id="contact-form">
     <input type="text" name="name" placeholder="Your Name" required />
     <input type="email" name="email" placeholder="Your Email" required />
     <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
     <button type="submit">Send Message</button>
-    <p style="font-size: 0.9rem; color: #444; text-align: center;">Your message will be sent to the site owner via Formspree.</p>
+    <p id="form-status" style="font-size: 0.9rem; color: #444; text-align: center;"></p>
 </form>
+<script>
+  const form = document.getElementById("contact-form");
+  const status = document.getElementById("form-status");
+  
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("https://formspree.io/f/mrbkvyar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        status.innerText = "✅ Your message has been sent successfully!";
+        status.style.color = "green";
+        form.reset();
+      } else {
+        status.innerText = "❌ Something went wrong. Please try again.";
+        status.style.color = "red";
+      }
+    } catch (err) {
+      status.innerText = "❌ Error sending form. Try again later.";
+      status.style.color = "red";
+    }
+  });
+</script>
 </section>
 
 </body>
 </html>
+
 
 
 
