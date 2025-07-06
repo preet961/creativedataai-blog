@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification": content="google01065a90a05589b0.html"/>
   <title>Generative AI Blog</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="icon" href="logo.png.png" type="image/png">
+  <link rel="icon" href="logo.png" type="image/png">
   <style>
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       line-height: 1.6;
       background: linear-gradient(135deg, #b3ffec, #66ccff);
       color: #1a1a1a;
     }
-
     header {
       background: #ffffffcc;
       display: flex;
@@ -28,11 +26,15 @@
       top: 0;
       z-index: 1000;
     }
-
-    .logo {
-      height: 130px;
+    .logo { height: 50px; }
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #005b7f;
+      font-weight: 600;
+      transition: color 0.3s;
     }
-
+    nav a:hover { color: #007f5f; }
     .section {
       background-color: #ffffffcc;
       border-radius: 12px;
@@ -40,28 +42,13 @@
       padding: 2rem;
       margin: 2rem auto;
       max-width: 960px;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
-
-    .section.reveal {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-    }
-
     .blog-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.5rem;
       margin-top: 1rem;
     }
-
     .blog-card {
       background-color: #f0faff;
       border-radius: 10px;
@@ -69,109 +56,120 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     .blog-card:hover {
       transform: scale(1.05);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
-
-    h2 {
-      font-size: 2rem;
-      color: #005b7f;
+    h2 { font-size: 2rem; color: #005b7f; }
+    h3 { margin-top: 0; color: #007f5f; }
+    ul { padding-left: 1.2rem; }
+    li { margin-bottom: 0.5rem; }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
-
-    h3 {
-      margin-top: 0;
-      color: #007f5f;
+    .contact-form input,
+    .contact-form textarea {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
-
-    ul {
-      padding-left: 1.2rem;
+    .contact-form button {
+      background-color: #007f5f;
+      color: white;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
-
-    li {
-      margin-bottom: 0.5rem;
-    }
+    .contact-form button:hover { background-color: #005b7f; }
   </style>
 </head>
 <body>
 
 <header>
   <img src="logo.png" alt="CreativeDataAI Logo" class="logo">
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#blogs">Blogs</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
-<section class="section">
+<section id="home" class="section">
   <h2>📚 Learn More About Generative AI</h2>
-  <p>Generative AI is a branch of artificial intelligence focused on creating new data instances that resemble existing data. This includes generating text, images, audio, and even video. These models learn from massive datasets and are capable of producing content that mimics human creativity.</p>
-  <p><strong>Applications of Generative AI:</strong></p>
+  <img src="images/generative-ai.png.png" alt="Generative AI" style="width:100%;border-radius:10px;margin-bottom:1rem;">
+  <p>Generative AI is a branch of artificial intelligence focused on creating new data instances that resemble existing data. It is capable of generating text, images, audio, video, and more.</p>
   <ul>
-    <li>📄 <strong>Content Creation:</strong> Articles, marketing copy, and even poetry using models like ChatGPT, Jasper, and Claude.</li>
-    <li>🖼️ <strong>Image Synthesis:</strong> Tools like Midjourney and DALL·E can turn text into art and product mockups.</li>
-    <li>🎵 <strong>Music and Audio:</strong> Compose music or clone voices using Suno.ai or ElevenLabs.</li>
-    <li>💻 <strong>Software Development:</strong> GitHub Copilot helps developers write code faster and better.</li>
-    <li>📊 <strong>Business Automation:</strong> AI agents can summarize reports, automate customer support, and draft presentations.</li>
+    <li><strong>Text:</strong> Tools like ChatGPT and Claude for articles, blogs, and stories.</li>
+    <li><strong>Images:</strong> DALL·E, Midjourney for transforming prompts into visuals.</li>
+    <li><strong>Music:</strong> AI that composes and remixes tracks.</li>
+    <li><strong>Code:</strong> GitHub Copilot for software development automation.</li>
   </ul>
-  <p>As generative AI evolves, ethical considerations become more crucial — including bias mitigation, content authenticity, and data transparency.</p>
 </section>
 
 <section class="section">
   <h2>🧠 Behind the Technology</h2>
-  <p>Generative AI is driven by advanced models such as:</p>
+  <img src="images/ai-architecture.png" alt="AI Technology" style="width:100%;border-radius:10px;margin-bottom:1rem;">
+  <p>Generative AI is powered by models like:</p>
   <ul>
-    <li><strong>Transformers:</strong> Backbone of models like GPT and BERT.</li>
-    <li><strong>Diffusion Models:</strong> Used in generating realistic images (e.g., Stable Diffusion).</li>
-    <li><strong>GANs (Generative Adversarial Networks):</strong> Two networks competing to create more believable outputs.</li>
+    <li><strong>Transformers:</strong> Key architecture behind GPT and BERT.</li>
+    <li><strong>GANs:</strong> Two networks (generator and discriminator) to produce realistic content.</li>
+    <li><strong>Diffusion Models:</strong> Used in modern image generation tools.</li>
   </ul>
-  <p>These architectures enable systems to understand input prompts and generate outputs that match user intent — often with impressive contextual awareness.</p>
+  <p>These architectures allow AI to create meaningful, high-quality, and contextually relevant outputs based on learned patterns from data.</p>
 </section>
 
-<section class="section">
+<section id="blogs" class="section">
   <h2>🛠️ Real Tools, Real Workflows</h2>
+  <img src="images/ai-tools.png.png" alt="AI Tools" style="width:100%;border-radius:10px;margin-bottom:1rem;">
   <div class="blog-grid">
     <div class="blog-card">
-      <h3>Content Creators</h3>
-      <p>Bloggers and marketers use Jasper and Copy.ai to speed up their writing pipeline while maintaining creativity.</p>
-    </div>
-    <div class="blog-card">
-      <h3>Developers</h3>
-      <p>GitHub Copilot, Replit AI, and Tabnine allow devs to write boilerplate, refactor code, and even debug suggestions on the fly.</p>
+      <h3>Writers & Creators</h3>
+      <p>Use Jasper, Copy.ai, or Notion AI to brainstorm content and draft articles faster.</p>
     </div>
     <div class="blog-card">
       <h3>Designers</h3>
-      <p>Using Midjourney and Canva's Magic Design, creators can turn simple prompts into digital posters, mockups, or social posts.</p>
+      <p>Midjourney and Canva Magic turn prompts into stunning graphics.</p>
     </div>
     <div class="blog-card">
-      <h3>Students & Educators</h3>
-      <p>ChatGPT and Claude help students generate study notes, summarize content, and quiz themselves using conversational AI.</p>
+      <h3>Developers</h3>
+      <p>GitHub Copilot and Tabnine help you code smarter and faster.</p>
+    </div>
+    <div class="blog-card">
+      <h3>Students</h3>
+      <p>ChatGPT summarizes topics, answers questions, and explains complex concepts.</p>
     </div>
   </div>
 </section>
 
 <section class="section">
   <h2>🌍 The Future of Generative AI</h2>
-  <p>As Generative AI continues to mature, we're seeing groundbreaking changes in creativity, productivity, and communication. The next big wave includes:</p>
+  <img src="images/future-ai.png.png" alt="Future AI" style="width:100%;border-radius:10px;margin-bottom:1rem;">
+  <p>Looking ahead, generative AI will shape industries, education, and everyday life through:</p>
   <ul>
-    <li><strong>Multimodal AI:</strong> Systems that can understand and generate text, image, audio, and video together.</li>
-    <li><strong>Real-Time Collaboration:</strong> AI tools that co-create with users during live sessions.</li>
-    <li><strong>More Ethical Frameworks:</strong> A growing need for accountability, transparency, and responsible AI practices.</li>
-    <li><strong>Personal AI Assistants:</strong> Beyond chatbots, AI that manages calendars, emails, and personal workflows.</li>
+    <li><strong>Multimodal AI:</strong> Combining text, image, voice, and video into one smart system.</li>
+    <li><strong>Real-Time Collaboration:</strong> AI co-pilots working alongside humans in live environments.</li>
+    <li><strong>Ethical Design:</strong> More focus on bias reduction, transparency, and trust.</li>
+    <li><strong>Personal AI Assistants:</strong> Managing our schedules, health, and communication seamlessly.</li>
   </ul>
-  <p>It’s an exciting time to be part of the AI revolution. Whether you're learning, building, or simply curious — you're in the right place.</p>
 </section>
 
-<script>
-  const sections = document.querySelectorAll('.section');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('reveal');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  sections.forEach(section => observer.observe(section));
-</script>
+<section id="contact" class="section">
+  <h2>📩 Contact Me</h2>
+  <form class="contact-form">
+    <input type="text" placeholder="Your Name" required />
+    <input type="email" placeholder="Your Email" required />
+    <textarea rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
 
 </body>
 </html>
+
