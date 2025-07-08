@@ -112,6 +112,57 @@
     padding: 10px;
   }
 }
+@media (max-width: 768px) {
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  body {
+    padding-top: 100px;
+  }
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #ffffffcc;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  nav a {
+    margin-left: 0;
+    padding: 14px 10px;
+    width: 100%;
+  }
+}
+
+.blog-card img,
+.section img {
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.section {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 15px;
+  background: #007f5f;
+  color: white;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  font-size: 1.2rem;
+  z-index: 1000;
+}
 </style>  
 </head>
 <body>
@@ -240,8 +291,24 @@
   </div>
 </div>
 </footer>
+<button id="backToTop" class="back-to-top">↑</button>
+<script>
+  window.onscroll = function() {
+    const topBtn = document.getElementById("backToTop");
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      topBtn.style.display = "block";
+    } else {
+      topBtn.style.display = "none";
+    }
+  };
+  document.getElementById("backToTop").onclick = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+</script>
 </body>
 </html>
+
+
 
 
 
