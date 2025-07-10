@@ -11,7 +11,7 @@
       font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #b3ffec, #66ccff);
       margin: 0;
-      padding: 0;
+      padding-top: 100px;
     }
     header {
       background: #ffffffcc;
@@ -42,11 +42,19 @@
       transform: scale(1.05);
       transition: all 0.3s ease;
     }
-    .read-more:hover {
-      background-color: #005b7f;
+    .read-more-toggle {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #007f5f;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
     }
     .blog-grid {
-      margin-top: 120px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
@@ -82,20 +90,12 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       margin-bottom: 0.8rem;
     }
-    .read-more {
-      display: inline-block;
-      margin-top: 1rem;
-      background-color: #007f5f;
-      color: white;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      cursor: pointer;
-    }
-    .hidden-text {
+    .read-more-content {
       display: none;
+      white-space: pre-wrap;
+    }
+    .read-more-content.active {
+      display: block;
     }
     strong {
       background-color: yellow;
@@ -138,20 +138,19 @@
       cursor: pointer;
     }
     @media (max-width: 768px) {
-      nav {
-        display: none;
+      header {
         flex-direction: column;
         align-items: flex-start;
-        background: #ffffffcc;
-        padding: 1rem;
       }
-      nav.active {
+      nav {
         display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
       }
       nav a {
         margin-left: 0;
-        padding: 14px 10px;
-        width: 100%;
+        margin-bottom: 10px;
       }
     }
     .blog-card::before {
@@ -170,92 +169,102 @@
   </style>
 </head>
 <body>
-<header>
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
-  <nav id="navMenu">
-    <a href="index.html" style="background-color: #007f5f; color: white;">🏠 Home</a>
-    <a href="blogs.html" style="background-color: #007f5f; color: white;">📝 Blogs</a>
-    <a href="index.html#contact">📩 Contact</a>
-  </nav>
-</header>
-<section class="blog-grid">
-  <div class="blog-card">
-    <div class="blog-content">
-      <h3>🤖 What is Generative AI?</h3>
-      <p><strong>Explore how AI creates content</strong> like text, images, and more using GPT and GANs.</p>
-      <div class="hidden-text">
-        <p>Imagine you have a super-smart robot.</p>
-        <p><strong>Normal Robots:</strong> These robots are good at looking at things you already have. They can tell you what’s in a picture, guess what will happen next based on old data, or sort things out.</p>
-        <p><strong>Generative AI Robots (The Creators!):</strong> These are different. Instead of just looking at what’s already there, they can make brand new stuff!</p>
-        <p><strong>How do they make new stuff?</strong></p>
-        <ul>
-          <li><strong>They go to "school"</strong>: We show them millions and millions of examples of what we want them to create.</li>
-          <li><strong>They learn the "rules"</strong>: After seeing all that data, they start to figure out the patterns — how words go together, how faces look, how to paint styles.</li>
-          <li><strong>You tell them what to do, and poof!</strong> Once they’ve learned, you can give them an idea (a "prompt")...</li>
-        </ul>
-        <p><strong>Where do we see them?</strong></p>
-        <ul>
-          <li>Chatbots that sound like real people (like ChatGPT or Google Gemini)</li>
-          <li>Programs that create amazing art or realistic photos</li>
-          <li>Tools that help coders write computer programs faster</li>
-          <li>Even in music creation or designing new medicines</li>
-        </ul>
-        <p><strong>But, like any powerful tool, we need to be careful:</strong></p>
-        <ul>
-          <li>They can sometimes make up things that aren’t true (“hallucinations”)</li>
-          <li>They might learn bad habits or biases from the data we trained them on</li>
-          <li>They could be used to create fake videos or pictures (“deepfakes”)</li>
-          <li>They might change how some jobs work because they’re so efficient</li>
-        </ul>
-        <p><strong>In short:</strong> Generative AI is like giving computers the ability to be artists, writers, and composers — creating brand new things rather than just analyzing old ones.</p>
+  <header>
+    <img class="logo" src="logo.png" alt="CreativeDataAI Logo">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="blogs.html" style="background-color: #007f5f; color: white;">Blogs</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-content">
+        <h3>🤖 What is Generative AI?</h3>
+        <p><strong>Explore how AI creates content</strong> like text, images, and more using GPT and GANs.</p>
+        <p class="read-more-content">
+<strong>Imagine you have a super-smart robot.</strong>
+
+<strong>Normal Robots:</strong> These robots are good at looking at things you already have. They can tell you what’s in a picture, guess what will happen next based on old data, or sort things out. They are like really good librarians or analysts.
+
+<strong>Generative AI Robots (The Creators!):</strong> These are different. Instead of just looking at what’s already there, they can make brand new stuff!
+
+<strong>How do they make new stuff?</strong>
+- They go to "school": We show them millions and millions of examples of what we want them to create.
+- If we want them to write stories, we feed them tons of books, articles, and conversations.
+- If we want them to draw pictures, we show them millions of photos and paintings.
+- They learn the "rules": After seeing all that data, they start to figure out the patterns — how words go together, how faces look, how to paint styles. It's like they learn the "secret sauce" of creation.
+
+<strong>You tell them what to do, and poof!</strong> Once they’ve learned, you can give them an idea (a "prompt"). For example:
+- "Write me a poem about a flying cat."
+- "Draw a photo of a futuristic city at sunset."
+- "Make a song that sounds happy and bouncy."
+
+And because they learned all those patterns, they can then create something completely new that fits your request! It’s not copying — it’s genuinely making something original.
+
+<strong>Where do we see them?</strong>
+- Chatbots that sound like real people (like ChatGPT or Google Gemini)
+- Programs that create amazing art or realistic photos
+- Tools that help coders write computer programs faster
+- Even in music creation or designing new medicines
+
+<strong>But, like any powerful tool, we need to be careful:</strong>
+- They can sometimes make up things that aren’t true (“hallucinations”)
+- They might learn bad habits or biases from the data we trained them on
+- They could be used to create fake videos or pictures (“deepfakes”)
+- They might change how some jobs work because they’re so efficient
+
+<strong>In short:</strong> Generative AI is like giving computers the ability to be artists, writers, and composers — creating brand new things rather than just analyzing old ones.
+        </p>
+        <a class="read-more-toggle" onclick="toggleReadMore(this)">Read More →</a>
       </div>
-      <a class="read-more" onclick="toggleReadMore(this)">Read More →</a>
+    </div>
+    <div class="blog-card">
+      <div class="blog-content">
+        <h3>📜 The Origins of Generative AI</h3>
+        <p><strong>Learn how Generative AI evolved</strong> from early machine learning models to today’s cutting-edge tools.</p>
+        <p class="read-more-content">
+<strong>Generative AI has its roots in the 1950s,</strong> when the earliest ideas of artificial intelligence were born. Researchers like Alan Turing imagined machines that could think, and over time, these ideas turned into real algorithms.
+
+<strong>In the 2010s,</strong> breakthroughs in deep learning and neural networks led to the development of models like GANs (Generative Adversarial Networks) by Ian Goodfellow in 2014. These models could generate realistic images and videos by training two networks to compete — one creating, one judging.
+
+<strong>Later, transformer-based models like GPT</strong> (by OpenAI) took things further, enabling machines to write, code, and communicate with surprising fluency. These models learn patterns from vast amounts of text data, giving them the ability to predict and generate content in a human-like way.
+
+<strong>Today,</strong> Generative AI powers tools like ChatGPT, DALL·E, Midjourney, and more — making creativity and automation accessible to everyone.
+        </p>
+        <a class="read-more-toggle" onclick="toggleReadMore(this)">Read More →</a>
+      </div>
     </div>
   </div>
 
-  <div class="blog-card">
-    <div class="blog-content">
-      <h3>📜 The Origins of Generative AI</h3>
-      <p><strong>Learn how Generative AI evolved</strong> from early machine learning models to today’s cutting-edge tools.</p>
-      <div class="hidden-text">
-        <p>Generative AI has its roots in the 1950s, when the earliest ideas of artificial intelligence were born. Researchers like Alan Turing imagined machines that could think, and over time, these ideas turned into real algorithms.</p>
-        <p>In the 2010s, breakthroughs in deep learning and neural networks led to the development of models like GANs (Generative Adversarial Networks) by Ian Goodfellow in 2014. These models could generate realistic images and videos by training two networks to compete — one creating, one judging.</p>
-        <p>Later, transformer-based models like GPT (by OpenAI) took things further, enabling machines to write, code, and communicate with surprising fluency. These models learn patterns from vast amounts of text data, giving them the ability to predict and generate content in a human-like way.</p>
-        <p>Today, Generative AI powers tools like ChatGPT, DALL·E, Midjourney, and more — making creativity and automation accessible to everyone.</p>
-      </div>
-      <a class="read-more" onclick="toggleReadMore(this)">Read More →</a>
+  <div class="comment-box">
+    <h3>💬 Leave a Comment</h3>
+    <textarea rows="4" placeholder="Share your thoughts..."></textarea>
+    <button>Post Comment</button>
+  </div>
+
+  <footer>
+    <p>© 2025 CreativeDataAI. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="#" title="Instagram">📷</a>
+      <a href="#" title="WhatsApp">💬</a>
+      <a href="#" title="Twitter">🐦</a>
+      <a href="#" title="GitHub">💻</a>
+      <a href="#" title="LinkedIn">💼</a>
     </div>
-  </div>
-</section>
-<div class="comment-box">
-  <h3>💬 Leave a Comment</h3>
-  <textarea rows="4" placeholder="Share your thoughts..."></textarea>
-  <button>Post Comment</button>
-</div>
-<footer>
-  <p>© 2025 CreativeDataAI. All rights reserved.</p>
-  <div class="social-icons">
-    <a href="#" title="Instagram">📸</a>
-    <a href="#" title="WhatsApp">💬</a>
-    <a href="#" title="Twitter">🐦</a>
-    <a href="#" title="GitHub">💻</a>
-    <a href="#" title="LinkedIn">💼</a>
-  </div>
-</footer>
-<script>
-function toggleReadMore(link) {
-  const fullPost = link.previousElementSibling;
-  const isVisible = fullPost.style.display === "block";
-  fullPost.style.display = isVisible ? "none" : "block";
-  link.textContent = isVisible ? "Read More →" : "Read Less ←";
-}
-function toggleMenu() {
-  const nav = document.getElementById("navMenu");
-  nav.classList.toggle("active");
-}
-</script>
+  </footer>
+
+  <script>
+    function toggleReadMore(button) {
+      const content = button.previousElementSibling;
+      content.classList.toggle("active");
+      button.textContent = content.classList.contains("active") ? "Read Less ←" : "Read More →";
+    }
+  </script>
 </body>
 </html>
+
 
 
 
