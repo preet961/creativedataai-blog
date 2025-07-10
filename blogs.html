@@ -4,88 +4,125 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blogs | CreativeDataAI</title>
-    <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* General Body Styles */
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #b3ffec, #66ccff);
             margin: 0;
-            padding: 0;
-            padding-top: 100px; /* Default padding for fixed header, will be adjusted by JS */
+            padding: 0; /* Will be set by JS */
             transition: padding-top 0.3s ease; /* Smooth transition for padding adjustment */
         }
+
+        /* Header Styles */
         header {
-            background: #ffffffcc;
+            background: #ffffff; /* Changed to solid white (fully opaque) */
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed; /* Keep header fixed */
+            position: fixed; /* Stays at the top */
             top: 0;
-            width: 100%;
-            z-index: 999;
-            box-sizing: border-box; /* Include padding in the element's total width and height */
+            left: 0; /* Ensure it starts from the very left */
+            width: 100%; /* Spans full width */
+            z-index: 999; /* Stays above other content */
+            box-sizing: border-box; /* Include padding in width/height */
+            flex-wrap: wrap; /* Allows items to wrap if space is constrained */
         }
+
         .logo {
-            height: 80px; /* Adjust as needed */
+            height: 80px; /* Adjust based on your actual logo size */
+            flex-shrink: 0; /* Prevent logo from shrinking */
         }
+
+        /* Desktop Navigation (default) */
+        nav {
+            display: flex; /* For horizontal links */
+            gap: 1.5rem; /* Space between links */
+        }
+
         nav a {
-            transition: background-color 0.3s ease, color 0.3s ease;
             padding: 6px 12px;
             border-radius: 6px;
-            margin-left: 1.5rem;
             text-decoration: none;
             color: #005b7f;
             font-weight: 600;
-            display: inline-flex; /* Use flex for icon alignment if needed */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+            display: inline-flex; /* To align icon and text if you add them later */
             align-items: center;
-            gap: 5px; /* Space between icon and text */
+            gap: 5px;
         }
+
         nav a:hover {
-            opacity: 0.85;
-            transform: scale(1.05);
-            transition: all 0.3s ease;
+            background-color: #005b7f; /* Example hover background */
+            color: white;
+            opacity: 0.9;
+            transform: scale(1.02); /* Slight scale on hover */
         }
-        .read-more:hover {
-            background-color: #005b7f;
+
+        /* Hamburger Menu Button (hidden on desktop) */
+        .hamburger {
+            display: none; /* Hidden by default */
+            font-size: 2rem; /* Larger icon for mobile */
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #005b7f; /* Color of the hamburger icon */
+            padding: 0.5rem; /* Make clickable area larger */
         }
+
+        /* Blog Grid and Cards */
         .blog-grid {
-            margin-top: 2rem;
+            margin-top: 2rem; /* Initial margin, but body padding handles main spacing */
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             padding: 2rem;
             max-width: 1000px;
-            margin: auto;
+            margin-left: auto; /* Center the grid */
+            margin-right: auto; /* Center the grid */
         }
+
         .blog-card {
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border: 1px solid #e0f7fa;
             background: #ffffff;
-            padding: 1rem;
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-            transform: translateY(0);
             border-radius: 12px;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            overflow: hidden; /* Ensures border-radius applies to children like image */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .blog-card:hover {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transform: translateY(-8px); /* Subtle lift on hover */
+            transform: translateY(-8px);
         }
-        .blog-card img {
+
+        .blog-card::before { /* Decorative top border for cards */
+            content: '';
+            display: block;
+            height: 6px;
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            background: linear-gradient(to right, #66ccff, #b3ffec);
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            z-index: 1; /* Above other content of the card */
         }
+
         .blog-content {
-            padding: 1rem;
+            padding: 1.5rem; /* Increased padding inside card for better spacing */
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allows content to take available space */
         }
+
         .blog-content h3 {
             color: #004d40;
             font-size: 1.4rem;
@@ -95,43 +132,92 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin-bottom: 0.8rem;
+            transition: background 0.3s ease;
         }
+        .blog-content h3:hover {
+            background: linear-gradient(to right, #66ccff, #b3ffec);
+        }
+
         .blog-content p {
             color: #444;
+            line-height: 1.6;
         }
+
         .read-more {
             display: inline-block;
             margin-top: 1rem;
             background-color: #007f5f;
             color: white;
             font-weight: 600;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem; /* Slightly larger button */
             border-radius: 6px;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            align-self: flex-start; /* Aligns button to the left */
         }
+        .read-more:hover {
+            background-color: #005b7f;
+        }
+
         .full-post {
             margin-top: 1rem;
             color: #444;
+            line-height: 1.7; /* Better readability for full post */
+        }
+        .full-post mark {
+            background: linear-gradient(to right, #fff3b0, #ffe8a1);
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
-        a:hover {
-            opacity: 0.85;
-            transform: scale(1.05);
-            transition: all 0.3s ease;
+        /* Footer Styles */
+        footer {
+            background: #ffffffcc;
+            padding: 2rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #444;
+            margin-top: 4rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            max-width: 960px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-        .blog-card img,
-        .section img {
-            max-height: 220px;
-            object-fit: cover;
+        footer a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #007f5f;
+            transition: color 0.3s ease;
         }
-
-        .section {
-            margin-top: 3rem;
-            margin-bottom: 3rem;
+        footer a:hover {
+            color: #005b7f;
         }
+        footer .social-icons a {
+            background: #ccc; /* Default for social icons */
+            border-radius: 50%;
+            padding: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: background 0.3s ease;
+        }
+        footer .social-icons img {
+            height: 20px;
+            width: 20px;
+            filter: brightness(0) invert(1); /* Makes SVG white */
+        }
+        /* Specific social icon colors */
+        footer .social-icons a[href*="whatsapp"] { background: #25D366; }
+        footer .social-icons a[href*="linkedin"] { background: #0077B5; }
+        footer .social-icons a[href*="x.com"] { background: #000000; }
+        footer .social-icons a[href*="github"] { background: #333333; }
+        footer .social-icons a[href*="instagram"] { background: #E1306C; }
 
+
+        /* Back to Top Button */
         .back-to-top {
             position: fixed;
             bottom: 20px;
@@ -145,78 +231,71 @@
             display: none;
             font-size: 1.2rem;
             z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
-        .blog-content h3:hover {
-            background: linear-gradient(to right, #66ccff, #b3ffec);
-        }
-        .hamburger {
-            display: none; /* Hidden by default for desktop */
-            font-size: 1.5rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #005b7f; /* Color the hamburger icon */
+        .back-to-top:hover {
+            background-color: #005b7f;
+            transform: translateY(-3px);
         }
 
+        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             header {
-                flex-direction: column; /* Stack logo and nav vertically */
-                align-items: flex-start;
-                padding: 1rem; /* Adjust padding for mobile */
+                flex-direction: row; /* Keep logo and hamburger on same row initially */
+                justify-content: space-between; /* Space them out */
+                align-items: center;
+                padding: 1rem;
             }
             .logo {
-                margin-bottom: 1rem; /* Space between logo and nav */
+                margin-bottom: 0; /* Remove bottom margin on logo */
             }
             .hamburger {
-                display: block; /* Show hamburger button on mobile */
-                align-self: flex-end; /* Align to the right within the flex column */
-                position: absolute; /* Position relative to header */
-                top: 1rem;
-                right: 1rem;
+                display: block; /* Show hamburger button */
             }
             nav {
                 display: none; /* Hide nav by default */
-                width: 100%;
                 flex-direction: column;
-                background: #ffffff; /* Solid background when active */
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                background: #ffffff; /* Solid white background for the expanded menu */
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Stronger shadow for menu */
                 border-radius: 8px;
                 padding: 1rem 0; /* Padding for the nav links */
-                margin-top: 0.5rem; /* Space below header content */
+                position: absolute; /* Position relative to the header */
+                top: 100%; /* Position below the main header content */
+                left: 0;
+                width: 100%;
+                box-sizing: border-box;
+                margin-top: 0; /* Remove any previous margin */
             }
             nav.active {
                 display: flex; /* Show nav when active */
             }
             nav a {
-                margin: 0; /* Remove margin-left */
                 padding: 12px 1rem; /* Full width clickable area */
                 width: 100%;
-                box-sizing: border-box; /* Include padding in width */
+                box-sizing: border-box;
                 border-bottom: 1px solid #eee; /* Separator for links */
+                justify-content: flex-start; /* Align link content to start */
             }
             nav a:last-child {
-                border-bottom: none; /* No border for the last link */
+                border-bottom: none;
             }
-        }
-        .blog-card::before {
-            content: '';
-            display: block;
-            height: 6px;
-            width: 100%;
-            background: linear-gradient(to right, #66ccff, #b3ffec);
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            z-index: 1;
+
+            .blog-grid {
+                padding: 1rem; /* Less padding on small screens */
+                gap: 1.5rem; /* Slightly less gap */
+            }
+            .blog-content {
+                padding: 1rem; /* Adjust padding for mobile */
+            }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="https://via.placeholder.com/150x80" alt="CreativeDataAI Logo" class="logo"> <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <img src="https://creativity365.co/assets/img/hero-img.png" alt="CreativeDataAI Logo" class="logo">
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
     <nav id="navMenu">
         <a href="index.html">🏠 Home</a>
         <a href="blogs.html">📝 Blogs</a>
@@ -231,39 +310,39 @@
             <p>Explore how AI creates content like text, images, and more using GPT and GANs.</p>
             <div class="full-post" style="display:none;">
                 <p>Imagine you have a super-smart robot.</p>
-                <p><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">Normal Robots:</mark> These robots are good at looking at things you already have. They can tell you what’s in a picture, guess what will happen next based on old data, or sort things out. They are like really good librarians or analysts.</p>
-                <p><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">Generative AI Robots (The Creators!):</mark> These are different. Instead of just looking at what’s already there, they can <strong>make brand new stuff!</strong></p>
+                <p><mark>Normal Robots:</mark> These robots are good at looking at things you already have. They can tell you what’s in a picture, guess what will happen next based on old data, or sort things out. They are like really good librarians or analysts.</p>
+                <p><mark>Generative AI Robots (The Creators!):</mark> These are different. Instead of just looking at what’s already there, they can <strong>make brand new stuff!</strong></p>
                 <h4>How do they make new stuff?</h4>
                 <ol>
-                    <li><strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">They go to "school"</mark></strong>: We show them millions and millions of examples of what we want them to create.
+                    <li><strong><mark>They go to "school"</mark></strong>: We show them millions and millions of examples of what we want them to create.
                         <ul>
                             <li>If we want them to write stories, we feed them tons of books, articles, and conversations.</li>
                             <li>If we want them to draw pictures, we show them millions of photos and paintings.</li>
                         </ul>
                     </li>
-                    <li><strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">They learn the "rules"</mark></strong>: After seeing all that data, they start to figure out the patterns — how words go together, how faces look, how to paint styles. It's like they learn the "secret sauce" of creation.</li>
-                    <li><strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">You tell them what to do, and poof!</mark></strong> Once they’ve learned, you can give them an idea (a "prompt"). For example:
+                    <li><strong><mark>They learn the "rules"</mark></strong>: After seeing all that data, they start to figure out the patterns — how words go together, how faces look, how to paint styles. It's like they learn the "secret sauce" of creation.</li>
+                    <li><strong><mark>You tell them what to do, and poof!</mark></strong> Once they’ve learned, you can give them an idea (a "prompt"). For example:
                         <ul>
                             <li>"Write me a poem about a flying cat."</li>
                             <li>"Draw a photo of a futuristic city at sunset."</li>
                             <li>"Make a song that sounds happy and bouncy."</li>
                         </ul>
-                        <p>And because they learned all those patterns, they can then <strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">create something completely new</mark></strong> that fits your request! It’s not copying — it’s genuinely making something original.</p>
+                        <p>And because they learned all those patterns, they can then <strong><mark>create something completely new</mark></strong> that fits your request! It’s not copying — it’s genuinely making something original.</p>
                     </li>
                 </ol>
                 <h4>Where do we see them?</h4>
                 <ul>
-                    <li><strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">Chatbots that sound like real people</mark></strong> (like ChatGPT or Google Gemini)</li>
-                    <li><strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">Programs that create amazing art or realistic photos</mark></strong></li>
+                    <li><strong><mark>Chatbots that sound like real people</mark></strong> (like ChatGPT or Google Gemini)</li>
+                    <li><strong><mark>Programs that create amazing art or realistic photos</mark></strong></li>
                     <li>Tools that help coders write computer programs faster</li>
-                    <li>Even in <strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">music creation or designing new medicines</mark></strong></li>
+                    <li>Even in <strong><mark>music creation or designing new medicines</mark></strong></li>
                 </ul>
-                <h4>But, like any powerful tool, <mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">we need to be careful</mark>:</h4>
+                <h4>But, like any powerful tool, <mark>we need to be careful</mark>:</h4>
                 <ul>
-                    <li>They can sometimes <strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">make up things</mark></strong> that aren’t true (“hallucinations”)</li>
-                    <li>They might <strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">learn bad habits or biases</mark></strong> from the data we trained them on</li>
-                    <li>They could be used to <strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">create fake videos or pictures</mark></strong> (“deepfakes”)</li>
-                    <li>They might <strong><mark style="background: linear-gradient(to right, #fff3b0, #ffe8a1); padding: 2px 6px; border-radius: 4px;">change how some jobs work</mark></strong> because they’re so efficient</li>
+                    <li>They can sometimes <strong><mark>make up things</mark></strong> that aren’t true (“hallucinations”)</li>
+                    <li>They might <strong><mark>learn bad habits or biases</mark></strong> from the data we trained them on</li>
+                    <li>They could be used to <strong><mark>create fake videos or pictures</mark></strong> (“deepfakes”)</li>
+                    <li>They might <strong><mark>change how some jobs work</mark></strong> because they’re so efficient</li>
                 </ul>
                 <p><strong>In short:</strong> Generative AI is like giving computers the ability to be artists, writers, and composers — creating brand new things rather than just analyzing old ones.</p>
             </div>
@@ -296,6 +375,27 @@
     </form>
 </section>
 
+<footer style="background: #ffffffcc; padding: 2rem 1rem; text-align: center; font-size: 0.9rem; color: #444; margin-top: 4rem; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); border-radius: 12px; max-width: 960px; margin-left: auto; margin-right: auto;">
+    <p>&copy; 2025 <strong>CreativeDataAI</strong>. All rights reserved.</p>
+    <p>Made with ❤️ by Preet</p>
+    <div style="margin-top: 1rem;">
+        <a href="index.html">Home</a>
+        <a href="blogs.html">Blogs</a>
+        <a href="index.html#contact">Contact</a>
+    </div>
+    <div style="margin-top: 2rem; text-align: center;">
+        <p style="margin-bottom: 1rem; font-weight: 600; color: #005b7f;">🔗 Follow Me</p>
+        <div class="social-icons" style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <a href="https://wa.me/?text=https://preet961.github.io/creativedataai-blog" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp"></a>
+            <a href="https://www.linkedin.com/in/preet961" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn"></a>
+            <a href="https://x.com/preet961" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)"></a>
+            <a href="https://github.com/preet961" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub"></a>
+            <a href="https://www.instagram.com/preet961" target="_blank"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+        </div>
+    </div>
+</footer>
+<button id="backToTop" class="back-to-top">↑</button>
+
 <script>
     function toggleReadMore(link) {
         const fullPost = link.previousElementSibling;
@@ -304,55 +404,25 @@
         link.textContent = isVisible ? "Read More →" : "Read Less ←";
     }
 
-    function toggleMenu() {
-        const nav = document.getElementById("navMenu");
+    function adjustBodyPadding() {
         const header = document.querySelector('header');
         const body = document.body;
-
-        nav.classList.toggle("active");
-
-        // After toggling, re-calculate the header height and adjust body padding
-        // Use a small timeout to allow for rendering changes
-        setTimeout(() => {
-            const headerHeight = header.offsetHeight;
-            body.style.paddingTop = `${headerHeight}px`;
-        }, 10);
+        body.style.paddingTop = `${header.offsetHeight}px`;
     }
 
-    // Initial adjustment of body padding on load (for desktop and initial mobile state)
-    window.addEventListener('load', () => {
-        const header = document.querySelector('header');
-        document.body.style.paddingTop = `${header.offsetHeight}px`;
-    });
+    function toggleMenu() {
+        const nav = document.getElementById("navMenu");
+        nav.classList.toggle("active");
+        adjustBodyPadding(); // Re-adjust padding after menu state changes
+    }
 
-    // Adjust body padding on window resize
-    window.addEventListener('resize', () => {
-        const header = document.querySelector('header');
-        document.body.style.paddingTop = `${header.offsetHeight}px`;
-    });
-</script>
+    // Call adjustBodyPadding on initial load
+    window.addEventListener('load', adjustBodyPadding);
 
-<footer style="background: #ffffffcc; padding: 2rem 1rem; text-align: center; font-size: 0.9rem; color: #444; margin-top: 4rem; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); border-radius: 12px; max-width: 960px; margin-left: auto; margin-right: auto;">
-    <p>&copy; 2025 <strong>CreativeDataAI</strong>. All rights reserved.</p>
-    <p>Made with ❤️ by Preet</p>
-    <div style="margin-top: 1rem;">
-        <a href="index.html" style="margin: 0 1rem; text-decoration: none; color: #007f5f;">Home</a>
-        <a href="blogs.html" style="margin: 0 1rem; text-decoration: none; color: #007f5f;">Blogs</a>
-        <a href="index.html#contact" style="margin: 0 1rem; text-decoration: none; color: #007f5f;">Contact</a>
-    </div>
-    <div style="margin-top: 2rem; text-align: center;">
-        <p style="margin-bottom: 1rem; font-weight: 600; color: #005b7f;">🔗 Follow Me</p>
-        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-            <a href="https://wa.me/?text=https://preet961.github.io/creativedataai-blog" target="_blank" style="background: #25D366; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" style="height: 20px; width: 20px; filter: brightness(0) invert(1);"></a>
-            <a href="https://www.linkedin.com/in/preet961" target="_blank" style="background: #0077B5; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" style="height: 20px; width: 20px; filter: brightness(0) invert(1);"></a>
-            <a href="https://x.com/preet961" target="_blank" style="background: #000000; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)" style="height: 20px; width: 20px; filter: brightness(0) invert(1);"></a>
-            <a href="https://github.com/preet961" target="_blank" style="background: #333333; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" style="height: 20px; width: 20px; filter: brightness(0) invert(1);"></a>
-            <a href="https://www.instagram.com/preet961" target="_blank" style="background: #E1306C; border-radius: 50%; padding: 10px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" style="height: 20px; width: 20px; filter: brightness(0) invert(1);"></a>
-        </div>
-    </div>
-</footer>
-<button id="backToTop" class="back-to-top">↑</button>
-<script>
+    // Call adjustBodyPadding on window resize
+    window.addEventListener('resize', adjustBodyPadding);
+
+    // Back to top button logic
     window.onscroll = function() {
         const topBtn = document.getElementById("backToTop");
         if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
